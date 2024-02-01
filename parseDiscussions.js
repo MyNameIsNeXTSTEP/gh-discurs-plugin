@@ -1,9 +1,24 @@
+const config = require('./config.json');
+
 const query = `{
-    repository (name: "NextStepBlog", owner: "MyNameIsNeXTSTEP") {
-        discussion (number: 23) {
-            comments (first: 10) {
+    repository (name: "${config.repositoryName}", owner: "${config.repositoryOwner}") {
+        discussion (number: ${config.discussionNumber}) {
+            comments (first: ${config.commentsFirstAmountToTake}) {
                 nodes {
+                    author {
+                      login
+                    }
                     body
+                    createdAt
+                    replies (first: 3) {
+                        nodes {
+                            author {
+                                login
+                            },
+                            createdAt
+                            body,
+                        }
+                    }
                 }
             }
         }
@@ -21,4 +36,8 @@ const discussionComments = fetch('https://api.github.com/graphql', {
     body: JSON.stringify({ query })
 }).then(resp => resp.json())
 
-discussionComments.then(resp => console.log(resp.data.repository.discussion.comments.nodes));
+discussionComments.then(resp => {
+    console.log(
+        resp.data.repository.discussion.comments.nodes
+    )
+});
