@@ -1,13 +1,70 @@
-#discussion-comments-list {
+.container {
+    display: flex;
+    flex-direction: row;
+}
+
+.wrapper {
+    margin: 20px;
+}
+
+.comment {
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid darkblue;
+    border-radius: 5px;
+    margin: 5px;
+    padding: 5px;
+}
+
+.comment-body {
+    margin: 0;
+    margin-bottom: 10px !important;
+}
+
+.comment-author {
+    width: fit-content;
+    text-decoration: underline;
+    font-size: small;
+    color: black;
+    border-radius: 5px;
+}
+
+.comment-created-at {
+    width: 200px;
+    height: 15px;
+    font-size: small;
+    padding: 0;
+    margin-top: 5px;
+    color: black;
+    border-radius: 3px;
+}
+
+
+#discussion-comments-list {
+    width: 600px;
     height: auto;
-    border: 1px solid black;
     margin-top: 20px;
     margin-bottom: 20px;
 }
 
 #print-discussion-comments-btn, #push-comment-btn {
     width: 200px;
+    background-color: rgb(4, 4, 72);
+    text-decoration: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+    margin-bottom: 10px;
+    margin-top: 10px;
+	border: 2px solid black;
+	padding: 5px;
+	font: inherit;
+	outline: inherit;
+}
+
+#clear-discussion-comments-btn {
+    width: 70px;
     background-color: rgb(4, 4, 72);
     text-decoration: none;
     border-radius: 5px;
@@ -35,4 +92,6 @@
 
 #comment-input {
     width: 300px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
