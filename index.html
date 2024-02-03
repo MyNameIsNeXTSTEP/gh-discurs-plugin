@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>github-discurs-plugin</title>
+    <link href="./style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <h2>
+        Discussion comments list
+    </h2>
+    <div id="discussion-comments-list">
+        <pre id="comments-list-pre"></pre>
+    </div>
+    <button id="print-discussion-comments-btn">
+        Print discussion comments
+    </button>
+    <div id="add-comment">
+        <input type="text" name="comment" id="comment-input">
+        <button id="push-comment-btn">Push comment</button>
+    </div>
+    <script>
+        document.getElementById('print-discussion-comments-btn').onclick = getComments;
+        document.getElementById('push-comment-btn').onclick = pushComment;
+        const commentsList = document.getElementById('comments-list-pre');
+
+        function getComments() {
+            const repositoryDiscussionGPLRequest = `{
+                repository (name: "NextStepBlog", owner: "MyNameIsNeXTSTEP") {
+                    discussion (number: 23) {
+                        comments (first: 10) {
+                            nodes {
+                                author {
+                                login
+                                }
+                                body
+                                createdAt
+                                replies (first: 3) {
+                                    nodes {
+                                        author {
+                                            login
+                                        },
+                                        createdAt
+                                        body,
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    discussionCategories(first: 10) {
+                        nodes {
+                            id # CategoryID
+                            name
+                        }
+                    }
+                }
+            }`;
+            const getDiscussionComments = (resp) => resp.data.repository.discussion.comments.nodes;
+            const discussionComments = fetch('https://api.github.com/graphql', {
+                method: 'POST',
+                headers: {
+                    Authorization: 'Bearer ',
+                    'Content-Type': 'application/json',
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0'
+                },
+                body: JSON.stringify({ query: repositoryDiscussionGPLRequest })
+            }).then(resp => resp.json())
+
+            discussionComments.then(resp => {
+                commentsList.innerHTML = JSON.stringify(getDiscussionComments(resp), null, 4);
+                console.log(resp);
+            });
+        };
+
+        function pushComment() {
+            const createDiscussionCommentGPLRequest = (comment) => `
+                mutation {
+                    addDiscussionComment (
+                        input: {
+                            discussionId: "D_kwDOKGX-vM4AVrMs",
+                            body: "${comment}",
+                            clientMutationId: "NextStepBlog"
+                        }
+                    ) {
+                        comment {
+                            author {
+                                login,
+                            },
+                            body
+                        }
+                    }
+                }
+            `;
+            fetch('https://api.github.com/graphql', {
+                method: 'POST',
+                headers: {
+                    Authorization: `Bearer `,
+                    'Content-Type': 'application/json',
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0'
+                },
+                body: JSON.stringify({
+                    query: createDiscussionCommentGPLRequest(
+                        document.getElementById('comment-input').value
+                        )
+                })
+            }).then(resp => resp.json())
+        }
+    </script>
+</body>
+</html>

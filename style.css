@@ -1,0 +1,38 @@
+#discussion-comments-list {
+    width: 100%;
+    height: auto;
+    border: 1px solid black;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#print-discussion-comments-btn, #push-comment-btn {
+    width: 200px;
+    background-color: rgb(4, 4, 72);
+    text-decoration: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+    margin-bottom: 10px;
+    margin-top: 10px;
+	border: 2px solid black;
+	padding: 5px;
+	font: inherit;
+	outline: inherit;
+}
+
+#print-discussion-comments-btn:active {
+    transform: scale(0.9);
+}
+#push-comment-btn:active {
+    transform: scale(0.9);
+}
+
+#add-comment {
+    display: flex;
+    flex-direction: column;
+}
+
+#comment-input {
+    width: 300px;
+}
