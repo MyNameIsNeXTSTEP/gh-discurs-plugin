@@ -1,10 +1,10 @@
 ## A plugin for websites which allows online commenting via GitHub discussions API
 
 ### Requirements
-- [] To be in the form of JS script for embedding
-- [] Be able to provide GitHub authorization and get / post discussion messages by GH API
-- [] Have a text styling
-- [] Be able to connect, be configured and used with ease
+- To be in the form of JS script for embedding
+- Be able to provide GitHub authorization and get / post discussion messages by GH API
+- Have a text styling editor
+- Be able to connect, be configured and used with ease
 
 All tasks (features, bugs, fixes, etc.) are tracking in issues.
 
